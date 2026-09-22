@@ -1,3 +1,4 @@
+from typing import Any
 import pytest
 from app.main import get_human_age
 
@@ -14,12 +15,15 @@ from app.main import get_human_age
         # Límite del segundo tramo (23 y 24)
         (23, 23, [1, 1]),
         (24, 24, [2, 2]),
-        # Transiciones para gato (27 vs 28)
+        # Transiciones específicas de gatos y perros
         (27, 24, [2, 2]),
         (28, 24, [3, 2]),
-        # Transiciones para perro (28 vs 29)
         (24, 28, [2, 2]),
         (24, 29, [2, 3]),
+        # Casos explícitos requeridos por la consigna
+        (27, 27, [2, 2]),
+        (28, 28, [3, 2]),
+        (100, 100, [21, 17]),
         # Números grandes
         (1000, 1000, [246, 197]),
     ],
@@ -42,7 +46,7 @@ def test_get_human_age_valid_cases(
     ],
 )
 def test_get_human_age_invalid_types_raise_type_error(
-    cat_age: type, dog_age: type
+    cat_age: Any, dog_age: Any
 ) -> None:
     with pytest.raises(TypeError):
         get_human_age(cat_age, dog_age)
